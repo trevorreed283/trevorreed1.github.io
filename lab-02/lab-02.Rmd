@@ -588,7 +588,16 @@ So far, we've learned a lots functions, please use as many as possible to explor
 -   `distinct()` and `slice_max()` – handle duplicates
 
 ```{r}
-# TODO
+colnames(kingco_homes_clean)
+
+kingco_homes_clean %>%
+  select(city, pinx,view_rainier,view_olympics,view_cascades,view_territorial,view_skyline,view_sound,view_lakewash,view_lakesamm,land_val,sqft_lot)%>%
+  filter(city == 'BELLEVUE')%>%
+  mutate(view_water = ifelse(view_lakewash == 1 & view_lakesamm == 1 & view_sound == 1, 1, 0))%>%
+  filter(view_water == 1)%>%
+  summarise(average_sqft_sale_price_water = sum(land_val,na.rm = TRUE)/sum(sqft_lot, na.rm =TRUE))%>%
+  rename(waterfront_sqft_cost_bellevue = average_sqft_sale_price_water)
+           
 ```
 
 ### 📚 TODO: Using GitHub
